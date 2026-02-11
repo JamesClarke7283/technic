@@ -129,6 +129,31 @@ if technic_compat.mcl then
         })
     end
 
+    -- Register alloy furnace machine crafting recipes in the craftguide
+    local brick = technic_compat.brick_block_ingredient
+    mcl_craftguide.register_craft({
+        type = "normal",
+        width = 3,
+        output = "technic:coal_alloy_furnace",
+        items = {brick, brick, brick, brick, "", brick, brick, brick, brick},
+    })
+
+    mcl_craftguide.register_craft({
+        type = "normal",
+        width = 3,
+        output = "technic:lv_alloy_furnace",
+        items = {brick, brick, brick, brick, "technic:machine_casing", brick, brick, "technic:lv_cable", brick},
+    })
+
+    mcl_craftguide.register_craft({
+        type = "normal",
+        width = 3,
+        output = "technic:mv_alloy_furnace",
+        items = {"technic:stainless_steel_ingot", "technic:lv_alloy_furnace", "technic:stainless_steel_ingot",
+                 "pipeworks:tube_1", "technic:mv_transformer", "pipeworks:tube_1",
+                 "technic:stainless_steel_ingot", "technic:mv_cable", "technic:stainless_steel_ingot"},
+    })
+
     -- Register Centrifuge Recipes
     for _, data in pairs(centrifuge_recipes) do
         mcl_craftguide.register_craft({
@@ -186,6 +211,59 @@ if technic_compat.mcl then
             width = 1,
             output = data[2],
             items = {data[1]},
+        })
+    end
+
+    -- Register "Technic" category in the help system (only if doc mod is present)
+    if minetest.get_modpath("doc") then
+        doc.add_category("technic", {
+            name = "Technic",
+            description = "Information about Technic mod machines, recipes and power systems",
+            build_formspec = doc.entry_builders.text,
+        })
+
+        doc.add_entry("technic", "alloy_furnace_recipes", {
+            name = "Alloy Furnace Recipes",
+            data =
+                "The Alloy Furnace combines two input materials to produce an alloy. " ..
+                "There are three tiers: Coal (fuel-fired), LV (electric), and MV (electric, faster).\n\n" ..
+
+                "=== Alloy Recipes ===\n\n" ..
+
+                "• Copper Dust x7 + Tin Dust x1 → Bronze Dust x8\n" ..
+                "• Copper Ingot x7 + Tin Ingot x1 → Brass Ingot x8\n" ..
+                "• Copper Dust x2 + Zinc Dust x1 → Brass Dust x3\n" ..
+                "• Copper Ingot x2 + Zinc Ingot x1 → Brass Ingot x3\n\n" ..
+
+                "• Wrought Iron Dust x2 + Coal Dust x1 → Carbon Steel Dust x2\n" ..
+                "• Wrought Iron Ingot x2 + Coal Dust x1 → Carbon Steel Ingot x2\n" ..
+                "• Carbon Steel Dust x2 + Coal Dust x1 → Cast Iron Dust x2\n" ..
+                "• Carbon Steel Ingot x2 + Coal Dust x1 → Cast Iron Ingot x2\n" ..
+                "• Carbon Steel Dust x4 + Chromium Dust x1 → Stainless Steel Dust x5\n" ..
+                "• Carbon Steel Ingot x4 + Chromium Ingot x1 → Stainless Steel Ingot x5\n\n" ..
+
+                "• Sand x2 + Coal Dust x2 → Silicon Wafer\n" ..
+                "• Silicon Wafer + Gold Dust → Doped Silicon Wafer\n\n" ..
+
+                "• Raw Latex x4 + Coal Dust x2 → Rubber x6\n" ..
+                "• Ice + Empty Bucket → Water Bucket\n\n" ..
+
+                "=== Crafting the Alloy Furnaces ===\n\n" ..
+
+                "Coal Alloy Furnace:\n" ..
+                "  Brick Block | Brick Block | Brick Block\n" ..
+                "  Brick Block |             | Brick Block\n" ..
+                "  Brick Block | Brick Block | Brick Block\n\n" ..
+
+                "LV Alloy Furnace:\n" ..
+                "  Brick Block | Brick Block    | Brick Block\n" ..
+                "  Brick Block | Machine Casing | Brick Block\n" ..
+                "  Brick Block | LV Cable       | Brick Block\n\n" ..
+
+                "MV Alloy Furnace:\n" ..
+                "  Stainless Steel | LV Alloy Furnace | Stainless Steel\n" ..
+                "  Tube             | MV Transformer    | Tube\n" ..
+                "  Stainless Steel | MV Cable          | Stainless Steel"
         })
     end
 end
