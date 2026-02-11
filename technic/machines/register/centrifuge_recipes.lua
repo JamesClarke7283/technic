@@ -13,6 +13,7 @@ end
 local function uranium_dust(p)
 	return "technic:uranium"..(p == 7 and "" or p).."_dust"
 end
+centrifuge_recipes = centrifuge_recipes or {}
 for p = 1, 34 do
 	table.insert(centrifuge_recipes, { uranium_dust(p).." 2", uranium_dust(p-1), uranium_dust(p+1) })
 end
@@ -27,6 +28,6 @@ if minetest.get_modpath("farming") then
 	table.insert(centrifuge_recipes, { "farming:wheat 4", "farming:seed_wheat 3", "default:dry_shrub 1" })
 end
 
-for _, data in pairs(centrifuge_recipes) do
+for _, data in pairs(centrifuge_recipes or {}) do
 	technic.register_separating_recipe({ input = { data[1] }, output = { data[2], data[3], data[4] } })
 end

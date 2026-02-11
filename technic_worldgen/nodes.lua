@@ -1,5 +1,6 @@
 
 local S = technic.worldgen.gettext
+local fortune_drop_ore = mcl_core and mcl_core.fortune_drop_ore
 
 local mineral_uranium_def = {
 	description = S("Uranium Ore"),
@@ -11,7 +12,7 @@ local mineral_uranium_def = {
 	_mcl_hardness =  5,
 	_mcl_blast_resistance =  3,
 	_mcl_silk_touch_drop = true,
-	_mcl_fortune_drop = mcl_core.fortune_drop_ore
+	_mcl_fortune_drop = fortune_drop_ore
 }
 
 local mineral_chromium_def = {
@@ -24,7 +25,7 @@ local mineral_chromium_def = {
 	_mcl_hardness =  3,
 	_mcl_blast_resistance =  3,
 	_mcl_silk_touch_drop = true,
-	_mcl_fortune_drop = mcl_core.fortune_drop_ore
+	_mcl_fortune_drop = fortune_drop_ore
 }
 
 local mineral_zinc_def = {
@@ -37,7 +38,7 @@ local mineral_zinc_def = {
 	_mcl_hardness =  2,
 	_mcl_blast_resistance =  3,
 	_mcl_silk_touch_drop = true,
-	_mcl_fortune_drop = mcl_core.fortune_drop_ore
+	_mcl_fortune_drop = fortune_drop_ore
 }
 
 local mineral_lead_def = {
@@ -50,7 +51,7 @@ local mineral_lead_def = {
 	_mcl_hardness =  2,
 	_mcl_blast_resistance =  3,
 	_mcl_silk_touch_drop = true,
-	_mcl_fortune_drop = mcl_core.fortune_drop_ore
+	_mcl_fortune_drop = fortune_drop_ore
 }
 
 local mineral_sulfur_def = {
@@ -63,7 +64,7 @@ local mineral_sulfur_def = {
 	_mcl_hardness =  1,
 	_mcl_blast_resistance =  3,
 	_mcl_silk_touch_drop = true,
-	_mcl_fortune_drop = mcl_core.fortune_drop_ore
+	_mcl_fortune_drop = fortune_drop_ore
 }
 
 local marble_def = {

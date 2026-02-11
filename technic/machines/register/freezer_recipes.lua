@@ -8,7 +8,7 @@ function technic.register_freezer_recipe(data)
 	technic.register_recipe("freezing", data)
 end
 
-for _, data in pairs(freezer_recipes) do
+for _, data in pairs(freezer_recipes or {}) do
 	technic.register_freezer_recipe({input = {data[1]}, output = data[2]})
 end
 

@@ -11,6 +11,6 @@ function technic.register_alloy_recipe(data)
 	technic.register_recipe("alloy", data)
 end
 
-for _, data in pairs(alloy_recipes) do
+for _, data in pairs(alloy_recipes or {}) do
 	technic.register_alloy_recipe({input = {data[1], data[2]}, output = data[3], time = data[4]})
 end
