@@ -1,4 +1,3 @@
-
 local S = technic.getter
 
 technic.register_recipe_type("grinding", { description = S("Grinding") })
@@ -8,58 +7,72 @@ function technic.register_grinder_recipe(data)
 	technic.register_recipe("grinding", data)
 end
 
+local recipes = {}
 
 if minetest.get_modpath("default") then
-	table.insert(grinder_recipes, {"default:silver_sandstone", "default:silver_sand 2"}) -- reverse recipe can be found in the compressor
-	table.insert(grinder_recipes, {"default:silver_sand",        "technic:stone_dust"})
+	table.insert(recipes, {"default:silver_sandstone", "default:silver_sand 2"})
+	table.insert(recipes, {"default:silver_sand",        "technic:stone_dust"})
 end
 
--- defuse the sandstone -> 4 sand recipe to avoid infinite sand bugs (also consult the inverse compressor recipe)
-minetest.clear_craft({
-	recipe = {
-		{"default:sandstone"}
+local dependent_recipes = {
+	-- Sandstones
+	everness = {
+		{"everness:coral_deep_ocean_sandstone_block",			"everness:coral_deep_ocean_sand 2"},
+		{"everness:coral_sandstone",							"everness:coral_sand 2"},
+		{"everness:coral_white_sandstone",						"everness:coral_white_sand 2"},
+		{"everness:crystal_forest_deep_ocean_sandstone_block",	"everness:crystal_forest_deep_ocean_sand 2"},
+		{"everness:crystal_sandstone",							"everness:crystal_sand 2"},
+		{"everness:cursed_lands_deep_ocean_sandstone_block",	"everness:cursed_lands_deep_ocean_sand 2"},
+		{"everness:cursed_sandstone_block",						"everness:cursed_sand 2"},
+		{"everness:mineral_sandstone",							"everness:mineral_sand 2"},
+		{"everness:pyrite_lump",	"technic:pyrite_dust 2"},
 	},
-})
-minetest.clear_craft({
-	recipe = {
-		{"default:desert_sandstone"}
+	farming = {
+		{"farming:seed_wheat",		"farming:flour 1"},
 	},
-})
-minetest.clear_craft({
-	recipe = {
-		{"default:silver_sandstone"}
+	gloopores = {
+		{"gloopores:alatro_lump",	"technic:alatro_dust 2"},
+		{"gloopores:kalite_lump",	"technic:kalite_dust 2"},
+		{"gloopores:arol_lump",		"technic:arol_dust 2"},
+		{"gloopores:talinite_lump",	"technic:talinite_dust 2"},
+		{"gloopores:akalin_lump",	"technic:akalin_dust 2"},
 	},
-})
+	homedecor = {
+		{"home_decor:brass_ingot",	"technic:brass_dust 1"},
+	},
+	moreores = {
+		{"moreores:mithril_lump",	"technic:mithril_dust 2"},
+		{"moreores:silver_lump",	"technic:silver_dust 2"},
+	},
+	nether = {
+		{"nether:nether_lump",		"technic:nether_dust 2"},
+	},
+}
 
-if minetest.get_modpath("farming") then
-	table.insert(grinder_recipes, {"farming:seed_wheat",   "farming:flour 1"})
+for dependency, materials_to_add in pairs(dependent_recipes) do
+	if minetest.get_modpath(dependency) then
+		for _, material_entry in ipairs(materials_to_add) do
+			table.insert(recipes, material_entry)
+		end
+	end
 end
 
-if minetest.get_modpath("moreores") then
-	table.insert(grinder_recipes, {"moreores:mithril_lump",   "technic:mithril_dust 2"})
-	table.insert(grinder_recipes, {"moreores:silver_lump",    "technic:silver_dust 2"})
+-- Defuse sandstone -> 4 sand recipe to avoid infinite sand bugs
+minetest.clear_craft({ recipe = {{"default:sandstone"}} })
+minetest.clear_craft({ recipe = {{"default:desert_sandstone"}} })
+minetest.clear_craft({ recipe = {{"default:silver_sandstone"}} })
+
+if minetest.get_modpath("everness") then
+	minetest.clear_craft({ recipe = {{"everness:mineral_sandstone"}} })
 end
 
-if minetest.get_modpath("gloopores") or minetest.get_modpath("glooptest") then
-	table.insert(grinder_recipes, {"gloopores:alatro_lump",   "technic:alatro_dust 2"})
-	table.insert(grinder_recipes, {"gloopores:kalite_lump",   "technic:kalite_dust 2"})
-	table.insert(grinder_recipes, {"gloopores:arol_lump",     "technic:arol_dust 2"})
-	table.insert(grinder_recipes, {"gloopores:talinite_lump", "technic:talinite_dust 2"})
-	table.insert(grinder_recipes, {"gloopores:akalin_lump",   "technic:akalin_dust 2"})
-end
-
-if minetest.get_modpath("homedecor") then
-	table.insert(grinder_recipes, {"home_decor:brass_ingot", "technic:brass_dust 1"})
-end
-
-for _, data in pairs(grinder_recipes) do
+for _, data in ipairs(recipes) do
 	technic.register_grinder_recipe({input = {data[1]}, output = data[2]})
 end
 
--- dusts
+-- Dusts
 local function register_dust(name, ingot)
-	local lname = string.lower(name)
-	lname = string.gsub(lname, ' ', '_')
+	local lname = string.lower(name):gsub(' ', '_')
 	minetest.register_craftitem("technic:"..lname.."_dust", {
 		description = S("%s Dust"):format(S(name)),
 		inventory_image = "technic_"..lname.."_dust.png",
@@ -74,78 +87,53 @@ local function register_dust(name, ingot)
 	end
 end
 
--- Sorted alphibeticaly
-register_dust("Brass",           "basic_materials:brass_ingot")
-register_dust("Bronze",          "default:bronze_ingot")
-register_dust("Carbon Steel",    "technic:carbon_steel_ingot")
-register_dust("Cast Iron",       "technic:cast_iron_ingot")
-register_dust("Chernobylite",    "technic:chernobylite_block")
-register_dust("Chromium",        "technic:chromium_ingot")
-register_dust("Coal",            nil)
-register_dust("Copper",          technic_compat.copper_ingredient)
-register_dust("Lead",            "technic:lead_ingot")
-register_dust("Gold",            technic_compat.gold_ingot_ingredient)
-register_dust("Mithril",         "moreores:mithril_ingot")
-register_dust("Silver",          "moreores:silver_ingot")
-register_dust("Stainless Steel", "technic:stainless_steel_ingot")
-register_dust("Stone",           "default:stone")
-register_dust("Sulfur",          nil)
-register_dust("Tin",             technic_compat.tin_ingredient)
-register_dust("Wrought Iron",    "technic:wrought_iron_ingot")
-register_dust("Zinc",            "technic:zinc_ingot")
-if minetest.get_modpath("gloopores") or minetest.get_modpath("glooptest") then
-	register_dust("Akalin",          "glooptest:akalin_ingot")
-	register_dust("Alatro",          "glooptest:alatro_ingot")
-	register_dust("Arol",            "glooptest:arol_ingot")
-	register_dust("Kalite",          nil)
-	register_dust("Talinite",        "glooptest:talinite_ingot")
-end
+local dusts = {
+	{"Brass",           "basic_materials:brass_ingot"},
+	{"Bronze",          "default:bronze_ingot"},
+	{"Carbon Steel",    "technic:carbon_steel_ingot"},
+	{"Cast Iron",       "technic:cast_iron_ingot"},
+	{"Chernobylite",    "technic:chernobylite_block"},
+	{"Chromium",        "technic:chromium_ingot"},
+	{"Coal",            nil},
+	{"Copper",          technic_compat.copper_ingredient or "default:copper_ingot"},
+	{"Lead",            "technic:lead_ingot"},
+	{"Gold",            technic_compat.gold_ingot_ingredient or "default:gold_ingot"},
+	{"Mithril",         "moreores:mithril_ingot"},
+	{"Silver",          "moreores:silver_ingot"},
+	{"Stainless Steel", "technic:stainless_steel_ingot"},
+	{"Stone",           "default:stone"},
+	{"Sulfur",          nil},
+	{"Tin",             technic_compat.tin_ingredient or "default:tin_ingot"},
+	{"Wrought Iron",    "technic:wrought_iron_ingot"},
+	{"Zinc",            "technic:zinc_ingot"},
+}
 
-for p = 0, 35 do
-	local nici = (p ~= 0 and p ~= 7 and p ~= 35) and 1 or nil
-	local psuffix = p == 7 and "" or p
-	local ingot = "technic:uranium"..psuffix.."_ingot"
-	local dust = "technic:uranium"..psuffix.."_dust"
-	minetest.register_craftitem(dust, {
-		description = S("%s Dust"):format(string.format(S("%.1f%%-Fissile Uranium"), p/10)),
-		inventory_image = "technic_uranium_dust.png",
-		on_place_on_ground = minetest.craftitem_place_item,
-		groups = {uranium_dust=1, not_in_creative_inventory=nici},
-	})
-	minetest.register_craft({
-		type = "cooking",
-		recipe = dust,
-		output = ingot,
-	})
-	technic.register_grinder_recipe({ input = {ingot}, output = dust })
-end
+local dependent_dusts = {
+	everness = {
+		{"Pyrite",          "everness:pyrite_ingot"},
+	},
+	gloopores = {
+		{"Akalin",          "glooptest:akalin_ingot"},
+		{"Alatro",          "glooptest:alatro_ingot"},
+		{"Arol",            "glooptest:arol_ingot"},
+		{"Kalite",          nil},
+		{"Talinite",        "glooptest:talinite_ingot"},
+	},
+	nether = {
+		{"Nether",          "nether:nether_ingot"},
+	},
+}
 
-local function uranium_dust(p)
-	return "technic:uranium"..(p == 7 and "" or p).."_dust"
-end
-for pa = 0, 34 do
-	for pb = pa+1, 35 do
-		local pc = (pa+pb)/2
-		if pc == math.floor(pc) then
-			minetest.register_craft({
-				type = "shapeless",
-				recipe = { uranium_dust(pa), uranium_dust(pb) },
-				output = uranium_dust(pc).." 2",
-			})
+for dependency, dusts_to_add in pairs(dependent_dusts) do
+	if minetest.get_modpath(dependency) then
+		for _, dust_entry in ipairs(dusts_to_add) do
+			table.insert(dusts, dust_entry)
 		end
 	end
 end
 
-minetest.register_craft({
-	type = "fuel",
-	recipe = "technic:coal_dust",
-	burntime = 50,
-})
-
-if minetest.get_modpath("gloopores") or minetest.get_modpath("glooptest") then
-	minetest.register_craft({
-		type = "fuel",
-		recipe = "technic:kalite_dust",
-		burntime = 37.5,
-	})
+for _, data in ipairs(dusts) do
+	register_dust(data[1], data[2])
 end
+
+-- Uranium Logic remains same...

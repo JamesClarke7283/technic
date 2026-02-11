@@ -5,8 +5,9 @@ max_line_length = 150
 redefined = false
 
 globals = {
-    "technic", "minetest",
-    "srcstack",
+    "technic",
+    "core",
+    "minetest",
 }
 
 read_globals = {

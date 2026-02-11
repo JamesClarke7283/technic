@@ -92,7 +92,7 @@ local dirtab = {
 
 local tube = {
 	insert_object = function(pos, node, stack, direction)
-		print(minetest.pos_to_string(direction), dirtab[direction.x+2+(direction.z+2)*2], node.param2)
+		--print(minetest.pos_to_string(direction), dirtab[direction.x+2+(direction.z+2)*2], node.param2)
 		if direction.y == 1
 			or (direction.y == 0 and dirtab[direction.x+2+(direction.z+2)*2] == node.param2) then
 			return stack
@@ -106,7 +106,7 @@ local tube = {
 		end
 	end,
 	can_insert = function(pos, node, stack, direction)
-		print(minetest.pos_to_string(direction), dirtab[direction.x+2+(direction.z+2)*2], node.param2)
+		--print(minetest.pos_to_string(direction), dirtab[direction.x+2+(direction.z+2)*2], node.param2)
 		if direction.y == 1
 			or (direction.y == 0 and dirtab[direction.x+2+(direction.z+2)*2] == node.param2) then
 			return false
@@ -412,28 +412,23 @@ minetest.register_on_player_receive_fields(
 	end
 )
 
-local function default_get_charge(itemstack)
+function technic.get_charge(itemstack)
 	-- check if is chargable
 	local tool_name = itemstack:get_name()
 	if not technic.power_tools[tool_name] then
 		return 0, 0
 	end
-	-- Set meta data for the tool if it didn't do it itself
-	local item_meta = minetest.deserialize(itemstack:get_metadata()) or {}
-	if not item_meta.charge then
-		item_meta.charge = 0
-	end
-	return item_meta.charge, technic.power_tools[tool_name]
+	local item_meta = technic.get_stack_meta(itemstack)
+	return item_meta:get_int("technic:charge"), technic.power_tools[tool_name]
 end
 
-local function default_set_charge(itemstack, charge)
+function technic.set_charge(itemstack, charge)
 	local tool_name = itemstack:get_name()
 	if technic.power_tools[tool_name] then
 		technic.set_RE_wear(itemstack, charge, technic.power_tools[tool_name])
 	end
-	local item_meta = minetest.deserialize(itemstack:get_metadata()) or {}
-	item_meta.charge = charge
-	itemstack:set_metadata(minetest.serialize(item_meta))
+	local item_meta = technic.get_stack_meta(itemstack)
+	item_meta:set_int("technic:charge", charge)
 end
 
 function technic.charge_tools(meta, batt_charge, charge_step)
@@ -445,8 +440,8 @@ function technic.charge_tools(meta, batt_charge, charge_step)
 
 	-- get callbacks
 	local src_def = src_stack:get_definition()
-	local technic_get_charge = src_def.technic_get_charge or default_get_charge
-	local technic_set_charge = src_def.technic_set_charge or default_set_charge
+	local technic_get_charge = src_def.technic_get_charge or technic.get_charge
+	local technic_set_charge = src_def.technic_set_charge or technic.set_charge
 
 	-- get tool charge
 	local tool_charge, item_max_charge = technic_get_charge(src_stack)
@@ -479,8 +474,8 @@ function technic.discharge_tools(meta, batt_charge, charge_step, max_charge)
 
 	-- get callbacks
 	local src_def = src_stack:get_definition()
-	local technic_get_charge = src_def.technic_get_charge or default_get_charge
-	local technic_set_charge = src_def.technic_set_charge or default_set_charge
+	local technic_get_charge = src_def.technic_get_charge or technic.get_charge
+	local technic_set_charge = src_def.technic_set_charge or technic.set_charge
 
 	-- get tool charge
 	local tool_charge, item_max_charge = technic_get_charge(src_stack)
