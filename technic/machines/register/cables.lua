@@ -194,8 +194,7 @@ function technic.register_cable(tier, size)
 		on_construct = clear_networks,
 		after_destruct = clear_networks,
 		_mcl_blast_resistance = 1.5,
-		_mcl_hardness = 3
-		after_destruct = clear_networks,
+		_mcl_hardness = 3,
 	})
 
 	local xyz = {

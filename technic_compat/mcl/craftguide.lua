@@ -151,12 +151,14 @@ if technic_compat.mcl then
 
     -- Register Extractor Recipes
     for _, data in ipairs(extractor_recipes) do
-        mcl_craftguide.register_craft({
-            type = "extractor",
-            width = 1,
-            output = data[2],
-            items = {data[1]},
-        })
+        if data[2] and data[2] ~= "" then
+            mcl_craftguide.register_craft({
+                type = "extractor",
+                width = 1,
+                output = data[2],
+                items = {data[1]},
+            })
+        end
     end
 
     -- Register Freezer Recipes
