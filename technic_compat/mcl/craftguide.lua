@@ -135,7 +135,7 @@ if technic_compat.mcl then
         type = "normal",
         width = 3,
         output = "technic:coal_alloy_furnace",
-        items = {brick, brick, brick, brick, "", brick, brick, brick, brick},
+        items = {brick, brick, brick, brick, brick, brick, brick, brick},
     })
 
     mcl_craftguide.register_craft({
