@@ -56,6 +56,7 @@ local function set_injector_formspec(meta)
 	local is_stack = meta:get_string("mode") == "whole stacks"
 	meta:set_string("formspec",
 		"size[8,9;]"..
+		technic_compat.formspec_prefix..
 		"item_image[0,0;1,1;technic:injector]"..
 		"label[1,0;"..S("Self-Contained Injector").."]"..
 		(is_stack and
@@ -65,7 +66,9 @@ local function set_injector_formspec(meta)
 			"button[2,1;2,1;mode_private;"..S("Public").."]" or
 			"button[2,1;2,1;mode_public;"..S("Private").."]")..
 		"list[current_name;main;0,2;8,2;]"..
+		technic_compat.get_itemslot_bg(0, 2, 8, 2)..
 		"list[current_player;main;0,5;8,4;]"..
+		technic_compat.get_itemslot_bg(0, 5, 8, 4)..
 		"listring[]"..
 		fs_helpers.cycling_button(
 			meta,

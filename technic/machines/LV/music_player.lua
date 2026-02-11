@@ -71,6 +71,7 @@ end
 local function set_display(meta)
 	meta:set_string("formspec",
 			"size[4,4.5]"..
+			technic_compat.formspec_prefix..
 			"item_image[0,0;1,1;technic:music_player]"..
 			"label[1,0;"..S("%s Music Player"):format("LV").."]"..
 			"button[0,1;1,1;track1;1]"..

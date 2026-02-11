@@ -91,10 +91,10 @@ end
 local function set_forcefield_formspec(meta)
 	local formspec
 	if digilines_path then
-		formspec = "size[5,3.25]"..
+		formspec = "size[5,3.25]"..technic_compat.formspec_prefix..
 			"field[0.3,3;5,1;channel;Digiline Channel;"..meta:get_string("channel").."]"
 	else
-		formspec = "size[5,2.25]"
+		formspec = "size[5,2.25]"..technic_compat.formspec_prefix
 	end
 	formspec = formspec..
 		"field[0.3,0.5;2,1;range;"..S("Range")..";"..meta:get_int("range").."]"

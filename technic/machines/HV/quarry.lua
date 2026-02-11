@@ -20,7 +20,9 @@ local quarry_eject_dir = vector.new(0, 1, 0)
 local function set_quarry_formspec(meta)
 	local radius = meta:get_int("size")
 	local formspec = "size[6,4.3]"..
+		technic_compat.formspec_prefix..
 		"list[context;cache;0,1;4,3;]"..
+		technic_compat.get_itemslot_bg(0, 1, 4, 3)..
 		"item_image[4.8,0;1,1;technic:quarry]"..
 		"label[0,0.2;"..S("%s Quarry"):format("HV").."]"..
 		"field[4.3,3.5;2,1;size;"..S("Radius:")..";"..radius.."]"

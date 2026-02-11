@@ -20,12 +20,17 @@ local workshop_demand = {5000, 3500, 2000}
 
 local workshop_formspec =
 	"size[8,9;]"..
+	technic_compat.formspec_prefix..
 	"list[current_name;src;3,1;1,1;]"..
+	technic_compat.get_itemslot_bg(3, 1, 1, 1)..
 	"label[0,0;"..S("%s Tool Workshop"):format("MV").."]"..
 	"list[current_name;upgrade1;1,3;1,1;]"..
+	technic_compat.get_itemslot_bg(1, 3, 1, 1)..
 	"list[current_name;upgrade2;2,3;1,1;]"..
+	technic_compat.get_itemslot_bg(2, 3, 1, 1)..
 	"label[1,4;"..S("Upgrade Slots").."]"..
 	"list[current_player;main;0,5;8,4;]"..
+	technic_compat.get_itemslot_bg(0, 5, 8, 4)..
 	"listring[current_player;main]"..
 	"listring[current_name;src]"..
 	"listring[current_player;main]"..

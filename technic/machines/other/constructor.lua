@@ -146,13 +146,16 @@ local function make_constructor(mark, length)
 		on_construct = function(pos)
 			local meta = minetest.get_meta(pos)
 			local formspec = "size[8,9;]"..
+				technic_compat.formspec_prefix..
 				"label[0,0;"..S("Constructor Mk%d"):format(mark).."]"..
-				"list[current_player;main;0,5;8,4;]"
+				"list[current_player;main;0,5;8,4;]"..
+				technic_compat.get_itemslot_bg(0, 5, 8, 4)
 			for i = 1, length do
 				formspec = formspec
 					.."label[5,"..(i - 1)..";"..S("Slot %d"):format(i).."]"
 					.."list[current_name;slot"..i
 						..";6,"..(i - 1)..";1,1;]"
+					..technic_compat.get_itemslot_bg(6, i - 1, 1, 1)
 			end
 			meta:set_string("formspec", formspec)
 			meta:set_string("infotext", S("Constructor Mk%d"):format(mark))

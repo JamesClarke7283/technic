@@ -162,15 +162,19 @@ function technic.register_battery_box(data)
 
 	local formspec =
 		"size[8,9]"..
+		technic_compat.formspec_prefix..
 		"image[1,1;1,2;technic_power_meter_bg.png]"..
 		"list[context;src;3,1;1,1;]"..
+		technic_compat.get_itemslot_bg(3, 1, 1, 1)..
 		"image[4,1;1,1;technic_battery_reload.png]"..
 		"list[context;dst;5,1;1,1;]"..
+		technic_compat.get_itemslot_bg(5, 1, 1, 1)..
 		"label[0,0;"..S("%s Battery Box"):format(tier).."]"..
 		"label[3,0;"..S("Charge").."]"..
 		"label[5,0;"..S("Discharge").."]"..
 		"label[1,3;"..S("Power level").."]"..
 		"list[current_player;main;0,5;8,4;]"..
+		technic_compat.get_itemslot_bg(0, 5, 8, 4)..
 		"listring[context;dst]"..
 		"listring[current_player;main]"..
 		"listring[context;src]"..
@@ -183,7 +187,9 @@ function technic.register_battery_box(data)
 	if data.upgrade then
 		formspec = formspec..
 			"list[context;upgrade1;3.5,3;1,1;]"..
+			technic_compat.get_itemslot_bg(3.5, 3, 1, 1)..
 			"list[context;upgrade2;4.5,3;1,1;]"..
+			technic_compat.get_itemslot_bg(4.5, 3, 1, 1)..
 			"label[3.5,4;"..S("Upgrade Slots").."]"..
 			"listring[context;upgrade1]"..
 			"listring[current_player;main]"..

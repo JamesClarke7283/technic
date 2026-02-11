@@ -15,6 +15,7 @@ local cable_entry = "^technic_cable_connection_overlay.png"
 
 local function set_supply_converter_formspec(meta)
 	local formspec = "size[5,2.25]"..
+		technic_compat.formspec_prefix..
 		"field[0.3,0.5;2,1;power;"..S("Input Power")..";"..meta:get_int("power").."]"
 	if digilines_path then
 		formspec = formspec..

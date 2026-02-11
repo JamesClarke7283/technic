@@ -34,9 +34,12 @@ local function make_reactor_formspec(meta)
 	local f =
 		"formspec_version[4]"..
 		"size[10.75,10.75]"..
+		technic_compat.formspec_prefix..
 		"label[0.2,0.4;"..S("Nuclear Reactor Rod Compartment").."]"..
 		"list[current_name;src;1.5,1;3,2;]"..
+		technic_compat.get_itemslot_bg(1.5, 1, 3, 2)..
 		"list[current_player;main;0.5,5.5;8,4;]"..
+		technic_compat.get_itemslot_bg(0.5, 5.5, 8, 4)..
 		"listring[]"..
 		"button[5.7,1;2,1;start;Start]"..
 		"checkbox[5.7,2.75;autostart;automatic Start;"..meta:get_string("autostart").."]"

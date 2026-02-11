@@ -36,10 +36,13 @@ function technic.register_generator(data)
 
 	local generator_formspec =
 		"size[8,9;]"..
+		technic_compat.formspec_prefix..
 		"label[0,0;"..S("Fuel-Fired %s Generator"):format(tier).."]"..
 		"list[current_name;src;3,1;1,1;]"..
+		technic_compat.get_itemslot_bg(3, 1, 1, 1)..
 		"image[4,1;1,1;default_furnace_fire_bg.png]"..
 		"list[current_player;main;0,5;8,4;]"..
+		technic_compat.get_itemslot_bg(0, 5, 8, 4)..
 		"listring[]"
 
 	local desc = S("Fuel-Fired %s Generator"):format(tier)
@@ -98,11 +101,14 @@ function technic.register_generator(data)
 		end
 		meta:set_string("formspec",
 			"size[8, 9]"..
+				technic_compat.formspec_prefix..
 			"label[0, 0;"..minetest.formspec_escape(desc).."]"..
 			"list[current_name;src;3, 1;1, 1;]"..
+			technic_compat.get_itemslot_bg(3, 1, 1, 1)..
 			"image[4, 1;1, 1;default_furnace_fire_bg.png^[lowpart:"..
 			(percent)..":default_furnace_fire_fg.png]"..
 			"list[current_player;main;0, 5;8, 4;]"..
+			technic_compat.get_itemslot_bg(0, 5, 8, 4)..
 			"listring[]"..
 			form_buttons
 		)
@@ -244,11 +250,14 @@ function technic.register_generator(data)
 			end
 			meta:set_string("formspec",
 				"size[8, 9]"..
+				technic_compat.formspec_prefix..
 				"label[0, 0;"..minetest.formspec_escape(desc).."]"..
 				"list[current_name;src;3, 1;1, 1;]"..
+				technic_compat.get_itemslot_bg(3, 1, 1, 1)..
 				"image[4, 1;1, 1;default_furnace_fire_bg.png^[lowpart:"..
 				(percent)..":default_furnace_fire_fg.png]"..
 				"list[current_player;main;0, 5;8, 4;]"..
+				technic_compat.get_itemslot_bg(0, 5, 8, 4)..
 				"listring[]"..
 				form_buttons
 			)
@@ -278,11 +287,14 @@ function technic.register_generator(data)
 
 			meta:set_string("formspec",
 				"size[8, 9]"..
+				technic_compat.formspec_prefix..
 				"label[0, 0;"..minetest.formspec_escape(desc).."]"..
 				"list[current_name;src;3, 1;1, 1;]"..
+				technic_compat.get_itemslot_bg(3, 1, 1, 1)..
 				"image[4, 1;1, 1;default_furnace_fire_bg.png^[lowpart:"..
 				(percent)..":default_furnace_fire_fg.png]"..
 				"list[current_player;main;0, 5;8, 4;]"..
+				technic_compat.get_itemslot_bg(0, 5, 8, 4)..
 				"listring[]"..
 				form_buttons
 			)
