@@ -2,7 +2,7 @@
 
 local S = technic.worldgen.gettext
 
-minetest.register_node(":moretrees:rubber_tree_sapling", {
+local sapling_def = {
 	description = S("Rubber Tree Sapling"),
 	drawtype = "plantlike",
 	tiles = {"technic_rubber_sapling.png"},
@@ -15,7 +15,18 @@ minetest.register_node(":moretrees:rubber_tree_sapling", {
 	_mcl_hardness =  1,
 	_mcl_blast_resistance =  1,
 	_mcl_silk_touch_drop = true
-})
+}
+
+-- Add bonemeal support when mcl_bone_meal is available
+if minetest.get_modpath("mcl_bone_meal") then
+	sapling_def._on_bone_meal = function(itemstack, placer, pointed_thing, pos, node)
+		if math.random() > 0.45 then return end
+		minetest.remove_node(pos)
+		minetest.spawn_tree(pos, technic.rubber_tree_model)
+	end
+end
+
+minetest.register_node(":moretrees:rubber_tree_sapling", sapling_def)
 
 minetest.register_craft({
 	type = "fuel",
@@ -28,7 +39,7 @@ minetest.register_node(":moretrees:rubber_tree_trunk", {
 	tiles = {"default_tree_top.png", "default_tree_top.png",
 		"technic_rubber_tree_full.png"},
 	groups = {tree=1, snappy=1, choppy=2, oddly_breakable_by_hand=1,
-		flammable=2, handy=1},
+		flammable=2, handy=1, axey=1},
 	sounds = sounds.node_sound_wood_defaults(),
 	_mcl_hardness =  1,
 	_mcl_blast_resistance =  1,
@@ -40,7 +51,7 @@ minetest.register_node(":moretrees:rubber_tree_trunk_empty", {
 	tiles = {"default_tree_top.png", "default_tree_top.png",
 		"technic_rubber_tree_empty.png"},
 	groups = {tree=1, snappy=1, choppy=2, oddly_breakable_by_hand=1,
-			flammable=2, not_in_creative_inventory=1,handy=1},
+			flammable=2, not_in_creative_inventory=1, handy=1, axey=1},
 	sounds = sounds.node_sound_wood_defaults(),
 	_mcl_hardness =  1,
 	_mcl_blast_resistance =  1,
@@ -52,7 +63,8 @@ minetest.register_node(":moretrees:rubber_tree_leaves", {
 	description = S("Rubber Tree Leaves"),
 	tiles = {"technic_rubber_leaves.png"},
 	paramtype = "light",
-	groups = {snappy=3, leafdecay=3, flammable=2, leaves=1,},
+	groups = {snappy=3, leafdecay=3, flammable=2, leaves=1,
+		handy=1, shearsy=1, swordy=1, hoey=1, dig_by_piston=1, deco_block=1},
 	drop = {
 		max_items = 1,
 		items = {{
