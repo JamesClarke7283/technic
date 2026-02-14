@@ -58,6 +58,9 @@ for dependency, materials_to_add in pairs(dependent_recipes) do
 	end
 end
 
+-- Coal lump -> coal dust (coal dust has nil ingot so register_dust won't add this)
+table.insert(recipes, {technic_compat.coal_ingredient, "technic:coal_dust 2"})
+
 -- MCL raw ore lump -> dust recipes
 if technic_compat.mcl then
 	table.insert(recipes, {technic_compat.iron_lump_ingredient, "technic:iron_dust 2"})
