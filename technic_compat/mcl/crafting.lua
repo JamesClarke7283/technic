@@ -46,6 +46,8 @@ technic_compat.mesecons_fiber_ingredient = technic_compat.mcl and "mesecons:wire
 technic_compat.stick_ingredient = technic_compat.mcl and "mcl_core:stick" or "default:stick"
 technic_compat.emtpy_bucket_ingredient = technic_compat.mcl and "mcl_buckets:bucket_empty" or "bucket:bucket_empty"
 technic_compat.water_bucket_ingredient = technic_compat.mcl and "mcl_buckets:bucket_water" or "bucket:bucket_water"
+technic_compat.piston_ingredient = technic_compat.mcl and "mcl_pistons:piston_off" or "mesecons_pistons:piston_normal_off"
+technic_compat.sticky_piston_ingredient = technic_compat.mcl and "mcl_pistons:piston_sticky_off" or "mesecons_pistons:piston_sticky_off"
 
 -- Ingredient Variables
 if technic_compat.mcl then

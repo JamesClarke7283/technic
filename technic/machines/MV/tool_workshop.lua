@@ -11,7 +11,7 @@ minetest.register_craft({
 	output = 'technic:tool_workshop',
 	recipe = {
 		{'group:wood',                         technic_compat.diamond_ingredient,        'group:wood'},
-		{'mesecons_pistons:piston_sticky_off', 'technic:machine_casing', 'technic:carbon_cloth'},
+		{technic_compat.sticky_piston_ingredient, 'technic:machine_casing', 'technic:carbon_cloth'},
 		{technic_compat.obsidian_ingredient,                   'technic:mv_cable',       technic_compat.obsidian_ingredient},
 	}
 })
