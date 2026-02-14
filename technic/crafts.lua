@@ -209,9 +209,22 @@ minetest.register_craft({
 })
 
 if minetest.get_modpath("mcl_core") then
-minetest.register_craft({
-	output = "technic:raw_latex",
-	type = "cooking",
-	recipe = "mcl_mobitems:slimeball",
-})
+	minetest.register_craft({
+		output = "technic:raw_latex",
+		type = "cooking",
+		recipe = "mcl_mobitems:slimeball",
+	})
+
+	-- Silver wire recipe for MCL (basic_materials gates this behind xcompat silver_ingot)
+	if minetest.get_modpath("moreores") then
+		minetest.register_craft({
+			output = "basic_materials:silver_wire 2",
+			type = "shapeless",
+			recipe = {
+				"moreores:silver_ingot",
+				"basic_materials:empty_spool",
+				"basic_materials:empty_spool",
+			},
+		})
+	end
 end
